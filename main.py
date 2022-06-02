@@ -17,5 +17,15 @@ def newtons_method(f, df, x=0.1, y=0.1):
         guess = f(x)
     return x
 
+def plot_test():
+    import numpy as np
+    import matplotlib.pyplot as plt
+
+    plt.imshow(np.random.random((500, 500)))
+    plt.colorbar()
+    plt.show()
+
+
 if __name__ == "__main__":
     print(newtons_method(f, df))
+    plot_test()
