@@ -1,10 +1,14 @@
 import numpy as np
+import matplotlib.colors
 import matplotlib.pyplot as plt
+
 
 MAX_ITERATION = 1200
 PRECISION = complex(1.e-9, 1.e-9)
-RESOLUTION = (10, 10)
+TOLERANCE = complex(1.e-3, 1.e-3)
+RESOLUTION = (2000, 2000)
 SIZE = (1, 1)
+
 
 # some test function
 def f(z: complex) -> complex:
@@ -29,7 +33,7 @@ def index_of_root(roots: list, root: complex):
         roots.append(root)
         return len(roots) - 1
     for i, r in enumerate(roots):
-        if abs(root.real - r.real) < PRECISION.real and abs(root.imag - r.imag) < PRECISION.imag:
+        if abs(root.real - r.real) < TOLERANCE.real and abs(root.imag - r.imag) < TOLERANCE.imag:
             return i
     roots.append(root)
     return len(roots) - 1
@@ -41,12 +45,13 @@ def map_nums():
             matrix[j][i] = index_of_root(roots, newtons_method(f, df, complex(x, y)))
     return matrix
 
-
-def plot_test(matrix, colors):
-    plt.imshow(m)
+def plot_test(matrix: np.ndarray, colors):
+    plt.imshow(matrix, cmap=matplotlib.colors.ListedColormap(colors))
     plt.colorbar()
     plt.show()
 
+
 if __name__ == "__main__":
     m = map_nums()
-    print(m)
+    print(m, m.max())
+    plot_test(m, ["#228da7", "#4da551", "#3b5188"])
